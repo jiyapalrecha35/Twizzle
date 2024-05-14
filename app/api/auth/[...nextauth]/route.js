@@ -2,7 +2,7 @@
 import NextAuth from "next-auth/next";
 import GoogleProvider from 'next-auth/providers/google';
 import { connectToDB } from "../../../../utils/db"
-import User from "../../../../models/User";
+import User from "../../../../models/user";
 
 //every nextjs route is a serverless route
 
