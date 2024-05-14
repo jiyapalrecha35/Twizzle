@@ -9,8 +9,7 @@ const Form = ({ type, post, setPost, submitting, handleSubmit }) => {
       </h1>
 
       <p className='desc text-left max-w-md'>
-        {type} and share amazing prompts with the world, and let your
-        imagination run wild with any AI-powered platform
+        {type} and share amazing thoughts or tweets with the world. Let your imagination run wild with Twizzle!
       </p>
 
       <form onSubmit={handleSubmit}
@@ -18,7 +17,7 @@ const Form = ({ type, post, setPost, submitting, handleSubmit }) => {
       >
         <label>
           <span className='font-satoshi font-semibold text-base text-gray-700'>
-            Your AI Prompt
+            Your Twizzle
           </span>
 
           <textarea value={post.prompt}
@@ -31,11 +30,12 @@ const Form = ({ type, post, setPost, submitting, handleSubmit }) => {
 
         <label>
           <span className='font-satoshi font-semibold text-base text-gray-700'>
-            Field of Prompt{" "}
+            Twizzle Category{" "}
             <span className='font-normal'>
               (#product, #webdevelopment, #idea, etc.)
             </span>
           </span>
+
 
           <input
             value={post.tag}
