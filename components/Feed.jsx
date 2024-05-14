@@ -30,6 +30,11 @@ const Feed = () => {
     fetchPosts();
   }, [])
 
+  useEffect(() => {
+    // Function to fetch all posts whenever allPosts state changes
+    fetchPosts();
+  }, [allPosts]);
+
 
   const handleSearchChange = (e) => {
     setSearchText(e.target.value);
