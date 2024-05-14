@@ -1,8 +1,8 @@
 "use client"
 import React, { useEffect, useState } from 'react'
 import Form from '../../components/Form'
-import { useRouter, useSearchParams } from 'next/navigation'
-
+import { useRouter } from 'next/navigation'
+import { useSearchParams } from 'next/navigation'
 
 //create prompt=iska ui hai yeh n then bakcend par jayega
 const UpdatePrompt = () => {
