@@ -1,8 +1,8 @@
-"use client"
-import React from 'react'
-import { useState, useEffect } from 'react'
-import PromptCard from './PromptCard'
+"use client";
 
+import { useState, useEffect } from "react";
+
+import PromptCard from "./PromptCard";
 
 const PromptCardList = ({ data, handleTagClick }) => {
   return (
@@ -15,41 +15,27 @@ const PromptCardList = ({ data, handleTagClick }) => {
         />
       ))}
     </div>
-  )
-}
+  );
+};
 
 const Feed = () => {
-  //all posts from all users
   const [allPosts, setAllPosts] = useState([]);
+
+  // Search states
   const [searchText, setSearchText] = useState("");
   const [searchTimeout, setSearchTimeout] = useState(null);
   const [searchedResults, setSearchedResults] = useState([]);
 
-  //whenerver component mounted show all posts
-  useEffect(() => {
-    fetchPosts();
-  }, [])
+  const fetchPosts = async () => {
+    const response = await fetch("/api/prompt");
+    const data = await response.json();
+
+    setAllPosts(data);
+  };
 
   useEffect(() => {
-    // Function to fetch all posts whenever allPosts state changes
     fetchPosts();
-  }, [allPosts]);
-
-
-  const handleSearchChange = (e) => {
-    setSearchText(e.target.value);
-    console.log(searchText)
-
-    // debounce method
-    //basically search is perfomed once every 500 ms
-    setSearchTimeout(
-      setTimeout(() => {
-        const searchResult = filterPrompts(e.target.value);
-        setSearchedResults(searchResult);
-      }, 500)
-    );
-
-  }
+  }, []);
 
   const filterPrompts = (searchtext) => {
     const regex = new RegExp(searchtext, "i"); // 'i' flag for case-insensitive search
@@ -61,22 +47,25 @@ const Feed = () => {
     );
   };
 
-  const handleTagClick = (tagName) => {
-    setSearchText(tagName);
-    const searchResult = filterPrompts(tagName);
-    setSearchedResults(searchResult);
-    console.log(tagName);
+  const handleSearchChange = (e) => {
+    clearTimeout(searchTimeout);
+    setSearchText(e.target.value);
 
-  }
-
-  const fetchPosts = async () => {
-    const response = await fetch("/api/prompt");
-    const data = await response.json();
-
-    setAllPosts(data);
+    // debounce method
+    setSearchTimeout(
+      setTimeout(() => {
+        const searchResult = filterPrompts(e.target.value);
+        setSearchedResults(searchResult);
+      }, 500)
+    );
   };
 
+  const handleTagClick = (tagName) => {
+    setSearchText(tagName);
 
+    const searchResult = filterPrompts(tagName);
+    setSearchedResults(searchResult);
+  };
 
   return (
     <section className='feed'>
@@ -92,7 +81,6 @@ const Feed = () => {
       </form>
 
       {/* All Prompts */}
-      {/* if search text is present thats shown to the user,otheriwse all the posts */}
       {searchText ? (
         <PromptCardList
           data={searchedResults}
@@ -102,7 +90,7 @@ const Feed = () => {
         <PromptCardList data={allPosts} handleTagClick={handleTagClick} />
       )}
     </section>
-  )
-}
+  );
+};
 
-export default Feed
+export default Feed;
